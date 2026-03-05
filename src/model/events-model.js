@@ -7,7 +7,7 @@ export class EventsModel {
   #destinationsById = {};
 
   constructor() {
-    Array.from({length: 4}, createRandomEvent).reduce((acc, event) => {
+    ['taxi', 'flight', 'restaurant'].map(createRandomEvent).reduce((acc, event) => {
       acc[event.id] = event;
       return acc;
     }, this.#eventsById);

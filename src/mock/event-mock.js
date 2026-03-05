@@ -1,15 +1,16 @@
 import dayjs from 'dayjs';
+import {getRandomElement} from '../utils';
 
-export function createRandomEvent() {
+export function createRandomEvent(type) {
   return {
     id: crypto.randomUUID(),
     date: dayjs('2019-03-18'),
-    type: 'taxi',
+    type,
     start: dayjs('2019-03-18T10:30'),
     end: dayjs('2019-03-18T11:00'),
-    price: 1230,
+    price: Math.round(Math.random() * 100),
     destination: crypto.randomUUID(),
-    offers: Array.from({ length: 2 }, () => crypto.randomUUID()),
+    offers: Array.from({ length: Math.round(Math.random() * 3) + 1 }, () => crypto.randomUUID()),
     isFavorite: false,
   };
 }
@@ -20,8 +21,8 @@ export function createOffers(type, ids) {
     offers: ids.map((id) =>
       ({
         id,
-        title: 'Upgrade to a business class',
-        price: 120
+        title: getRandomElement(['Upgrade to a business class', 'Add meal', 'Choose seats']),
+        price: Math.round(Math.random() * 100)
       })
     )
   };
