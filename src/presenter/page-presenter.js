@@ -8,10 +8,14 @@ import {render, RenderPosition} from '../framework/render';
 
 export class PagePresenter {
   #eventsModel;
+  #offersModel;
+  #destinationsModel;
   #events;
 
-  constructor({eventsModel}) {
+  constructor({eventsModel, offersModel, destinationsModel}) {
     this.#eventsModel = eventsModel;
+    this.#offersModel = offersModel;
+    this.#destinationsModel = destinationsModel;
   }
 
   init() {
@@ -51,28 +55,28 @@ export class PagePresenter {
     for (const event of this.#events) {
       const eventView = new EventView(
         event,
-        event.offers.map((id) => this.#eventsModel.getOfferById(id)),
-        this.#eventsModel.getDestinationById(event.destination)
+        event.offers.map((id) => this.#offersModel.getById(id)),
+        this.#destinationsModel.getById(event.destination)
       );
       render(eventView, eventsView.element);
     }
   }
 
   #renderEventForms(eventsView) {
-    const event = this.#events[0];
-    const editEventView = new EditEventView(
-      this.#eventsModel.getOffersByType(event.type),
-      this.#eventsModel.getDestinationById(event.destination),
-      event
-    );
-    render(editEventView, eventsView.element, RenderPosition.AFTERBEGIN);
+    // const event = this.#events[0];
+    // const editEventView = new EditEventView(
+    //   this.#offersModel.getByType(event.type),
+    //   this.#destinationsModel.getById(event.destination),
+    //   event
+    // );
+    // render(editEventView, eventsView.element, RenderPosition.AFTERBEGIN);
 
-    const newEventView = new EditEventView(
-      this.#eventsModel.getOffersByType('taxi'),
-      this.#eventsModel.getDestinations()[0]
-    );
-    render(newEventView, eventsView.element);
-
+    // const newEventView = new EditEventView(
+    //   this.#offersModel.getByType('taxi'),
+    //   this.#destinationsModel.getDestinations()[0]
+    // );
+    // render(newEventView, eventsView.element);
+    //
     render(eventsView, document.querySelector('.trip-events'));
   }
 }
