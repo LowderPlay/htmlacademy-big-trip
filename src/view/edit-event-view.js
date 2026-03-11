@@ -106,16 +106,20 @@ function createEditEventTemplate({id, type = EVENT_TYPES[0], price, start, end, 
       </form>`;
 }
 
-export default class EditEventView extends AbstractView{
+export default class EditEventView extends AbstractView {
   #editingEvent;
   #offers;
   #destination;
 
-  constructor(offers, destination, editingEvent = null) {
+  constructor(offers, destination, editingEvent = null, onSubmit = () => {}) {
     super();
     this.#offers = offers;
     this.#destination = destination;
     this.#editingEvent = editingEvent;
+    this.element.addEventListener('submit', onSubmit);
+    if (editingEvent) {
+      this.element.querySelector('.event__rollup-btn').addEventListener('click', onSubmit);
+    }
   }
 
   get template() {
